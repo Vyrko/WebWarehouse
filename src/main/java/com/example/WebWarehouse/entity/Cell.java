@@ -5,12 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Table(name = "cell")
 public class Cell {
     @Id
@@ -24,13 +25,8 @@ public class Cell {
     @JoinColumn(name = "id_warehouse")
     private Warehouse warehouse;
 
-    @OneToOne
-    @JoinColumn(name = "id_product")
-    private Product product;
-
-    private int product_quantity;
     public Cell(String cell_name, int capacity, Warehouse warehouse){
-        this.cell_name = cell_name;
+        this.cell_name=cell_name;
         this.capacity=capacity;
         this.warehouse=warehouse;
     }

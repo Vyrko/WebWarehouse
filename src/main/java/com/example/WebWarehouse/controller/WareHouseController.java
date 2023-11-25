@@ -1,8 +1,10 @@
 package com.example.WebWarehouse.controller;
 
 import com.example.WebWarehouse.entity.Cell;
+import com.example.WebWarehouse.entity.CellProduct;
 import com.example.WebWarehouse.entity.User;
 import com.example.WebWarehouse.entity.Warehouse;
+import com.example.WebWarehouse.services.CellProductService;
 import com.example.WebWarehouse.services.CellService;
 import com.example.WebWarehouse.services.WarehouseService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import java.util.List;
 public class WareHouseController {
     private final WarehouseService warehouseService;
     private final CellService cellService;
+    private final CellProductService cellProductService;
 
     @PostMapping("create")
     public String addWareHouse(Warehouse warehouse,@AuthenticationPrincipal User user) {
@@ -42,6 +45,7 @@ public class WareHouseController {
     {
         Warehouse warehouse = warehouseService.getWarehouseById(warehouse_id);
         List<Cell> cells = cellService.findAllByWarehouseId(warehouse_id);
+        /*List<CellProduct> cellProducts.getAll();*/
         model.addAttribute("cells",cells);
         model.addAttribute("warehouse", warehouse);
         return "/warehouse-info";

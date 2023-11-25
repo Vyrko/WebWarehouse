@@ -36,8 +36,7 @@ public class CellService {
     public List<Cell> findAllByWarehouseId(Long id){
         return cellRepository.findAllByWarehouseId(id);
     }
+    
 
-    public void setProduct(Product product, Cell cell) {
-
-    }
+    public Cell findById(Long cellId) {return cellRepository.findCellById(cellId); }
 }

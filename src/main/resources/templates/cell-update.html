@@ -96,8 +96,9 @@
             <div class="container position-relative">
                 <div class="row d-flex justify-content-center">
                     <div class="col-lg-6 text-center">
-                        <h2>Информация о складе</h2>
-                        <p>Исследуйте наш современный склад с множеством удобных ячеек, предоставляющих пространство для организации и хранения ваших ценных ресурсов и товаров.</p>
+                        <h2>Редактирование ячейки </h2>
+                        <p>Исследуйте наш современный склад с множеством удобных ячеек, предоставляющих пространство для
+                            организации и хранения ваших ценных ресурсов и товаров.</p>
                     </div>
                 </div>
             </div>
@@ -106,7 +107,8 @@
             <div class="container">
                 <ol>
                     <li><a href="/">Главная</a></li>
-                    <li>Склад</li>
+                    <li>Ячейка</li>
+                    <li>Редактирование</li>
                 </ol>
             </div>
         </nav>
@@ -117,63 +119,40 @@
     <section id="service" class="services pt-5">
         <div class="container " data-aos="fade-up">
             <div class="section-header">
-                <span th:text="${warehouse.name}"></span>
-                <h2 th:text="${warehouse.name}"></h2>
+                <span th:text="${cell.cell_name}"></span>
+                <h2 th:text="${cell.cell_name}"></h2>
+                <h2 th:text="'Cклада ' + ${cell.warehouse.name}"></h2>
                 <div class="row mb-3 ">
-                    <div class="col text-center">
+                    <div class="col text-center d-flex justify-content-center">
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>Название</th>
-                                <th>Площадь</th>
-                                <th>Местонахождение</th>
+                                <th>Кол-во товара</th>
+                                <th>Название товара</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td th:text="${warehouse.name}"></td>
-                                <td th:text="${warehouse.capacity}"></td>
-                                <td th:text="${warehouse.location}"></td>
+                            <tr th:if="${not #lists.isEmpty(cellProductList)}" th:each="cellProduct : ${cellProductList}">
+                                <td th:text="${cellProduct.quantity}"></td>
+                                <td th:text="${cellProduct.product.name}"></td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
-                    <h2> Информация о содержимом склада </h2>
-                    <div class="row mb-3 ">
-                        <div class="col text-center">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>Название</th>
-                                    <th>Свободно</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="cell : ${cells}">
-                                    <td th:text="${cell.cell_name}"></td>
-                                    <td th:text="${cell.capacity}"></td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary">
-                                            <a class="text-white"  th:href="'/cell/update/'+ ${cell.id}">Редактировать</a>
-                                        </button>
-                                    </td>
-                                    <!--<td th:text="${cell.capacity - (cell.product_quantity * cell.product.size)}"></td>-->
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProduct">
+                        Добавить Товар
+                    </button>
                 </div>
             </div>
         </div>
     </section><!-- End Services Section -->
 
     <!-- Модальное окно добавить склад-->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="myModalLabel">Добавление склада</h5>
+                    <h5 class="modal-title" id="myModalLabel">Добавление товара</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -181,24 +160,20 @@
                 <div class="modal-body">
                     <form action="/warehouse/create" method="post">
                         <div class="form-group">
-                            <label for="name">Название:</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Введите название">
+                            <label for="product">Продукт:</label>
+                            <select class="form-control" id="product" name="productId">
+                                <option th:each="product : ${products}" th:value="${product.id}" th:text="${product.name}"></option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="capacity">Вместимость:</label>
-                            <input type="text" class="form-control" id="capacity" name="capacity"
-                                   placeholder="Введите вместимость">
+                            <label for="quantity">Количество:</label>
+                            <select class="form-control" id="quantity" name="quantity">
+                                <option th:each="i : ${#numbers.sequence(1, products[0].quantity)}" th:value="${i}" th:text="${i}"></option>
+                            </select>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="location">Местоположение:</label>
-                            <input type="text" class="form-control" id="location" name="location"
-                                   placeholder="Введите местоположение">
-                        </div>
-                        <button type="submit" class="btn btn-primary ">Добавить</button>
+                        <button type="submit" class="btn btn-primary">Добавить</button>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>

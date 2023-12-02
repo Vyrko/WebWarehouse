@@ -106,7 +106,7 @@
       <div class="container">
         <ol>
           <li><a href="/">Главная</a></li>
-          <li>Регистрация</li>
+          <li>Вход</li>
         </ol>
       </div>
     </nav>
@@ -116,19 +116,16 @@
   <!-- ======= Services Section ======= -->
   <section id="service" class="services pt-5">
     <div class="wrapper">
-      <form action="/regist" method="post" class="login">
-        <p class="title">Регистрация</p>
-        <input name="name" type="text" placeholder="Имя" required />
+      <form action="/login" method="post" class="login">
+        <p class="title">Авторизация</p>
+        <input name="username" type="email" placeholder="email" autofocus/>
         <i class="fa fa-user"></i>
-        <input name="email" type="text" placeholder="Адрес почты" required />
-        <i class="fa fa-user"></i>
-        <input name="phoneNumber" type="text" placeholder="Номер телефона" required />
-        <i class="fa fa-user"></i>
-        <input name="password" type="password" placeholder="Пароль" required />
+        <input name="password" type="password" placeholder="password" />
         <i class="fa fa-key"></i>
+        <a href="#">Забыли пароль?</a>
         <button>
           <i class="spinner"></i>
-          <span class="state">Зарегистрироватся</span>
+          <span class="state">Войти</span>
         </button>
       </form>
       <footer><a target="blank" href="/">Твой склад</a></footer>

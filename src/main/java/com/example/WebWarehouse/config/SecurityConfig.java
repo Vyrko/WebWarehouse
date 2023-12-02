@@ -17,26 +17,26 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-   /* private final CustomUserDetailService customUserDetailService;
+    private final CustomUserDetailService customUserDetailService;
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailService)
                 .passwordEncoder(passwordEncoder());
-    }*/
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/registration").permitAll() // Открытый доступ для пути
+                .antMatchers("/", "/registration", "/regist").permitAll() // Открытый доступ для пути
                 .antMatchers("/static/**").permitAll()
                 .antMatchers("/warehouse/static/**").permitAll()
                 .anyRequest().authenticated() // Все остальные запросы требуют аутентификации
                 .and()
                 .formLogin() // Включаем форму аутентификации
-                /*.loginPage("/registration")
-                .permitAll()*/
+                .loginPage("/login")
+                .permitAll()
                 .and()
                 .logout() // Включаем возможность выхода из системы
                 .permitAll(); // Доступ к выходу из системы разрешен всем

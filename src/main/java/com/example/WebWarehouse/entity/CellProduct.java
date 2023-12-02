@@ -2,6 +2,7 @@ package com.example.WebWarehouse.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 @Table(name = "cell_product")
 public class CellProduct {
     @Id
@@ -24,9 +26,9 @@ public class CellProduct {
     @JoinColumn(name = "id_product")
     private Product product;
 
-    private int quantity;
+    private double quantity;
 
-    public CellProduct(Cell cell, Product product, int quantity) {
+    public CellProduct(Cell cell, Product product, double quantity) {
         this.cell = cell;
         this.product = product;
         this.quantity = quantity;

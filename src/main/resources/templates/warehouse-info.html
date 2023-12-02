@@ -138,7 +138,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <h2> Информация о содержимом склада </h2>
+                    <h2> Ячейки склада </h2>
                     <div class="row mb-3 ">
                         <div class="col text-center">
                             <table class="table">
@@ -154,7 +154,7 @@
                                     <td th:text="${cell.capacity}"></td>
                                     <td>
                                         <button type="button" class="btn btn-primary">
-                                            <a class="text-white"  th:href="'/cell/update/'+ ${cell.id}">Редактировать</a>
+                                            <a class="text-white"  th:href="'/cell/info/'+ ${cell.id}">Информация</a>
                                         </button>
                                     </td>
                                     <!--<td th:text="${cell.capacity - (cell.product_quantity * cell.product.size)}"></td>-->

@@ -27,6 +27,7 @@
   <link href="../static/vendor/aos/aos.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
+  <link href="../static/css/reg.css" rel="stylesheet">
   <link href="../static/css/main.css" rel="stylesheet">
 
   <!-- =======================================================
@@ -54,9 +55,9 @@
     <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
     <nav id="navbar" class="navbar">
       <ul>
-        <li><a href="/" class="active">Home</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/services">Services</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/warehouse/warehouse-index">Склад</a></li>
+        <li><a href="/product/product-form">Товар</a></li>
         <li><a href="/pricing">Pricing</a></li>
         <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
           <ul>
@@ -75,8 +76,8 @@
             <li><a href="#">Drop Down 4</a></li>
           </ul>
         </li>
-        <li><a href="contact.html" class="active">Contact</a></li>
-        <li><a class="get-a-quote" href="quote.html">Get a Quote</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a class="get-a-quote" href="/registration">Get a Quote</a></li>
       </ul>
     </nav><!-- .navbar -->
 
@@ -92,7 +93,7 @@
       <div class="container position-relative">
         <div class="row d-flex justify-content-center">
           <div class="col-lg-6 text-center">
-            <h2>Contact</h2>
+            <h2>Get a Quote</h2>
             <p>Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat ipsum dolorem.</p>
           </div>
         </div>
@@ -101,80 +102,63 @@
     <nav>
       <div class="container">
         <ol>
-          <li><a href="index.html">Home</a></li>
-          <li>Contact</li>
+          <li><a href="/">Home</a></li>
+          <li>Get a Quote</li>
         </ol>
       </div>
     </nav>
   </div><!-- End Breadcrumbs -->
 
-  <!-- ======= Contact Section ======= -->
-  <section id="contact" class="contact">
+  <!-- ======= Get a Quote Section ======= -->
+  <section id="get-a-quote" class="get-a-quote">
     <div class="container" data-aos="fade-up">
 
-      <div>
-        <iframe style="border:0; width: 100%; height: 340px;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" allowfullscreen></iframe>
-      </div><!-- End Google Maps -->
+      <div class="row g-0">
 
-      <div class="row gy-4 mt-4">
-
-        <div class="col-lg-4">
-
-          <div class="info-item d-flex">
-            <i class="bi bi-geo-alt flex-shrink-0"></i>
-            <div>
-              <h4>Location:</h4>
-              <p>A108 Adam Street, New York, NY 535022</p>
+        <div class="col-lg-5 quote-bg" style="background-image: url(../static/img/quote-bg.jpg);"></div>
+        <div class="col-lg-7">
+          <section class="wrapper">
+            <div class="form signup">
+              <header>Signup</header>
+              <form action="/regist" method="post">
+                <input name="name" type="text" placeholder="Full name" required />
+                <input name="email" type="text" placeholder="Email address" required />
+                <input name="phoneNumber" type="text" placeholder="Номер телефона" required />
+                <input name="password" type="password" placeholder="Password" required />
+                <div class="checkbox">
+                  <input type="checkbox" id="signupCheck" />
+                  <label for="signupCheck">I accept all terms & conditions</label>
+                </div>
+                <input type="submit" value="Signup" />
+              </form>
             </div>
-          </div><!-- End Info Item -->
-
-          <div class="info-item d-flex">
-            <i class="bi bi-envelope flex-shrink-0"></i>
-            <div>
-              <h4>Email:</h4>
-              <p>info@example.com</p>
+            <div class="form login">
+              <header>Login</header>
+              <form action="/login" method="post">
+                <input name="email" type="text" placeholder="Email address" required />
+                <input name="password" type="password" placeholder="Password" required />
+                <a href="#">Forgot password?</a>
+                <input type="submit" value="Login" />
+              </form>
             </div>
-          </div><!-- End Info Item -->
-
-          <div class="info-item d-flex">
-            <i class="bi bi-phone flex-shrink-0"></i>
-            <div>
-              <h4>Call:</h4>
-              <p>+1 5589 55488 55</p>
-            </div>
-          </div><!-- End Info Item -->
-
-        </div>
-
-        <div class="col-lg-8">
-          <form action="../static/forms/contact.php" method="post" role="form" class="php-email-form">
-            <div class="row">
-              <div class="col-md-6 form-group">
-                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
-              </div>
-              <div class="col-md-6 form-group mt-3 mt-md-0">
-                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
-              </div>
-            </div>
-            <div class="form-group mt-3">
-              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
-            </div>
-            <div class="form-group mt-3">
-              <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
-            </div>
-            <div class="my-3">
-              <div class="loading">Loading</div>
-              <div class="error-message"></div>
-              <div class="sent-message">Your message has been sent. Thank you!</div>
-            </div>
-            <div class="text-center"><button type="submit">Send Message</button></div>
-          </form>
-        </div><!-- End Contact Form -->
+            <script>
+              const wrapper = document.querySelector(".wrapper"),
+                      signupHeader = document.querySelector(".signup header"),
+                      loginHeader = document.querySelector(".login header");
+              loginHeader.addEventListener("click", () => {
+                wrapper.classList.add("active");
+              });
+              signupHeader.addEventListener("click", () => {
+                wrapper.classList.remove("active");
+              });
+            </script>
+          </section>
+        </div><!-- End Quote Form -->
 
       </div>
 
     </div>
-  </section><!-- End Contact Section -->
+  </section><!-- End Get a Quote Section -->
 
 </main><!-- End #main -->
 
@@ -266,4 +250,4 @@
 
 </body>
 
-</html>
+</html></html>

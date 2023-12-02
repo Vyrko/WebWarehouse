@@ -135,10 +135,8 @@
                                 <td th:text="${warehouse.location}"></td>
                                 <td>
                                     <button type="button" class="btn btn-primary">
-                                        <a  class="text-white" th:href="'/warehouse/info/'+ ${warehouse.id}">Ячейки</a>
+                                        <a  class="text-white" th:href="'/warehouse/info/'+ ${warehouse.id}">Информация</a>
                                     </button>
-                                    <button type="button" class="btn btn-primary">Редактировать
-
                                     </button>
                                     <button type="button" class="btn btn-danger"  >
                                         <a  class="text-white" th:href="'/warehouse/delete/'+ ${warehouse.id}">Удалить запись</a>

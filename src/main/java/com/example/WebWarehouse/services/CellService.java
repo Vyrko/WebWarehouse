@@ -7,13 +7,16 @@ import com.example.WebWarehouse.repository.CellRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
 public class CellService {
     public final CellRepository cellRepository;
-    private final WarehouseService warehouseService;
+    private final ProductService productService;
     public void save(Cell cell){
         cellRepository.save(cell);
     }
@@ -36,7 +39,13 @@ public class CellService {
     public List<Cell> findAllByWarehouseId(Long id){
         return cellRepository.findAllByWarehouseId(id);
     }
-    
-
+    public void updateCapacity(Long cellId, Long productId, int quantity){
+        DecimalFormat decimalFormat = new DecimalFormat("#0.0", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+        Cell cellFromDB = cellRepository.findCellById(cellId);
+        Product product = productService.findById(productId);
+        double result = Double.parseDouble(decimalFormat.format(cellFromDB.getCapacity() - product.getSize() * quantity));
+        cellFromDB.setCapacity(result);
+        cellRepository.save(cellFromDB);
+    }
     public Cell findById(Long cellId) {return cellRepository.findCellById(cellId); }
 }

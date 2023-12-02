@@ -17,7 +17,7 @@ public class Product {
 
     private String name;
     private double cost;
-    private String size;
+    private double size;
     private String postman;
     private int quantity;
     @OneToOne

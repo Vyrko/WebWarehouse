@@ -132,9 +132,15 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:if="${not #lists.isEmpty(cellProductList)}" th:each="cellProduct : ${cellProductList}">
+                            <tr th:if="${not #lists.isEmpty(cellProductList)}"
+                                th:each="cellProduct : ${cellProductList}">
                                 <td th:text="${cellProduct.quantity}"></td>
                                 <td th:text="${cellProduct.product.name}"></td>
+                                <td>
+                                    <button type="button" class="btn btn-primary">
+                                        <a class="text-white"  th:href="'/cell/cellProduct/'+ ${cellProduct.id}">Уменьшить товар</a>
+                                    </button>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -148,7 +154,8 @@
     </section><!-- End Services Section -->
 
     <!-- Модальное окно добавить склад-->
-    <div class="modal fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -157,22 +164,44 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form action="/warehouse/create" method="post">
-                        <div class="form-group">
-                            <label for="product">Продукт:</label>
-                            <select class="form-control" id="product" name="productId">
-                                <option th:each="product : ${products}" th:value="${product.id}" th:text="${product.name}"></option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="quantity">Количество:</label>
-                            <select class="form-control" id="quantity" name="quantity">
-                                <option th:each="i : ${#numbers.sequence(1, products[0].quantity)}" th:value="${i}" th:text="${i}"></option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Добавить</button>
-                    </form>
+                <div class="modal-body row gy-2 d-flex flex-row">
+                    <div class="col-md-6">
+                        <h5 th:text="'Свободного места в ячейке = ' + ${cell.capacity}"></h5>
+                        <form action="/cell/update" id="addProductToCell" method="post">
+                            <div class="form-group">
+                                <input name="cell_id" type="hidden" th:value="${cell.id}">
+                                <label class="form-label" for="product">Продукт:</label>
+                                <select  class="form-control" id="product" name="productId">
+                                    <option th:each="product : ${products}" th:value="${product.id}"
+                                            th:text="${product.name}"></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="quantity" class="form-label">Кол-во</label>
+                                <input class="form-control" type="text" id="quantity" name="quantity"
+                                       placeholder="Введите кол-во">
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                Заполнить склад
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Кол-во</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="product : ${products}">
+                                <td th:text="${product.name}"></td>
+                                <td th:text="${product.quantity}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

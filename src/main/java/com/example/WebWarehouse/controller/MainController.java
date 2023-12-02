@@ -1,19 +1,12 @@
 package com.example.WebWarehouse.controller;
 
-import com.example.WebWarehouse.entity.Cell;
-import com.example.WebWarehouse.entity.Product;
-import com.example.WebWarehouse.entity.User;
 import com.example.WebWarehouse.services.CellService;
 import com.example.WebWarehouse.services.ProductService;
 import com.example.WebWarehouse.services.WarehouseService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -46,4 +39,6 @@ public class MainController {
     public String openRegistration(){
         return "registration";
     }
+    @GetMapping("/login")
+    public String login() {return "login";}
 }

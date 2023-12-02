@@ -19,15 +19,16 @@ public class Cell {
     private Long id;
 
     private String cell_name;
-    private int capacity;
+    private double capacity;
 
     @ManyToOne
     @JoinColumn(name = "id_warehouse")
     private Warehouse warehouse;
 
-    public Cell(String cell_name, int capacity, Warehouse warehouse){
+    public Cell(String cell_name, double capacity, Warehouse warehouse){
         this.cell_name=cell_name;
         this.capacity=capacity;
         this.warehouse=warehouse;
     }
+    public boolean checkCapacity(double inputCapacity) {return inputCapacity <= capacity; }
 }

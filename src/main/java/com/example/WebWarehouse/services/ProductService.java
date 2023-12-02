@@ -14,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductService{
     private final ProductRepository productRepository;
-    private final CellService cellService;
 
     public boolean saveProduct(Product product, User user) throws IOException{
         product.setUser(user);

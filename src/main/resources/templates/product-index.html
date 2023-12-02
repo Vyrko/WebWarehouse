@@ -57,27 +57,15 @@
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/warehouse/warehouse-index">Склад</a></li>
-                <li><a href="/product/">Товар</a></li>
-                <li><a href="/pricing">Pricing</a></li>
-                <li class="dropdown"><a href="#"><span>Drop Down</span> <i
+                <li class="dropdown"><a href="/product/"><span>Товар</span> <i
                         class="bi bi-chevron-down dropdown-indicator"></i></a>
                     <ul>
-                        <li><a href="#">Drop Down 1</a></li>
-                        <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i
-                                class="bi bi-chevron-down dropdown-indicator"></i></a>
-                            <ul>
-                                <li><a href="#">Deep Drop Down 1</a></li>
-                                <li><a href="#">Deep Drop Down 2</a></li>
-                                <li><a href="#">Deep Drop Down 3</a></li>
-                                <li><a href="#">Deep Drop Down 4</a></li>
-                                <li><a href="#">Deep Drop Down 5</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Drop Down 2</a></li>
-                        <li><a href="#">Drop Down 3</a></li>
-                        <li><a href="#">Drop Down 4</a></li>
+                        <li><a href="/product/product-form">Добавить товар</a></li>
+                        <li><a href="/product/delete">Удалить товар</a></li>
+                        <li><a href="/product/update">Редактировать товар</a></li>
                     </ul>
                 </li>
+                <li><a href="/pricing">Pricing</a></li>
                 <li><a href="/contact">Contact</a></li>
                 <li><a class="get-a-quote" href="/registration">Get a Quote</a></li>
             </ul>
@@ -114,29 +102,51 @@
         </nav>
     </div><!-- End Breadcrumbs -->
 
-
-    <!-- ======= Services Section ======= -->
-
-    <section id="service" class="services pt-5">
-        <div class="container" data-aos="fade-up">
-            <form action="/cell/cellProduct/update" method="post" th:object="${cellProduct}">
-                <input name="id" class="form-control" type="hidden" th:field="*{id}"/>
-                <input name="id_cell" class="form-control" type="hidden" th:field="*{cell.id}"/>
-                <input name="id_product" class="form-control" type="hidden" th:field="*{product.id}"/>
-                <p>Ячейка: <span th:text="*{cell.cell_name}"></span></p>
-                <p>Товар: <span th:text="*{product.name}"></span></p>
-                <label class="form-label" for="quantity">Кол-во:</label>
-                <input class="form-control" type="text" id="quantity" name="quantity" th:field="*{quantity}" step="0.01" required/>
-                <br/>
-                <button type="submit">Save</button>
-            </form>
-        </div>
-
-    </section>
-
     <!-- ======= Frequently Asked Questions Section ======= -->
     <section id="faq" class="faq">
+        <div class="container" data-aos="fade-up">
 
+            <div class="section-header">
+                <span>Сохранённые товары</span>
+                <h2>Сохранённые товары</h2>
+
+            </div>
+
+            <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="200">
+                <div class="col-lg-10">
+
+                    <div class="accordion accordion-flush" id="faqlist">
+
+                        <div th:each="product : ${products}" class="accordion-item">
+                            <h3 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                       th:data-bs-target="'#faq-content-' + ${product.id}">
+                                    <i class="bi bi-question-circle question-icon"></i>
+                                    <p th:text="'Номер: ' + ${product.id}"></p>
+                                </button>
+                            </h3>
+                            <div th:id="'faq-content-' + ${product.id}"  class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                                <div class="accordion-body">
+                                    <p th:text="'Название: ' + ${product.name}"></p>
+                                    <p th:text="'Размер: ' + ${product.size}"></p>
+                                    <p th:text="'Поставщик: ' + ${product.postman}"></p>
+                                    <p th:text="'Стоимость: ' + ${product.cost}"></p>
+                                    <button type="button" class="btn btn-danger"  >
+                                        <a  class="text-white" th:href="'/product/order/'+ ${product.id}">Заказать</a>
+                                    </button>
+                                    <button type="button" class="btn btn-danger"  >
+                                        <a  class="text-white" th:href="'/product/delete/'+ ${product.id}">Удалить</a>
+                                    </button>
+                                </div>
+                            </div>
+                        </div><!-- # Faq item-->
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
     </section><!-- End Frequently Asked Questions Section -->
 
 </main><!-- End #main -->

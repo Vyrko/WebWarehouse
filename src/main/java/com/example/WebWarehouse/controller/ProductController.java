@@ -24,11 +24,12 @@ import java.util.List;
 public class ProductController {
     private List<Product> productList = new ArrayList<>();
     private final ProductService productService;
-    /*@PostMapping("/save-product")
-    public String addProduct(Product product, @AuthenticationPrincipal User user) throws IOException {
-        productService.saveProduct(product,user);
-        return "redirect:/product-form";
-    }*/
+    @GetMapping("/")
+    public String productMain(Model model, @AuthenticationPrincipal User user) {
+        List<Product> products = productService.getAllProductByUserId(user.getId());
+        model.addAttribute("products", products);
+        return "product-index";
+    }
     @PostMapping("save-product")
     public String saveProduct(@ModelAttribute("product") Product product) {
         productList.add(product);

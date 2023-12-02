@@ -30,20 +30,18 @@ public class ProductController {
         model.addAttribute("products", products);
         return "product-index";
     }
-    @PostMapping("save-product")
-    public String saveProduct(@ModelAttribute("product") Product product) {
-        productList.add(product);
-        return "redirect:/product/product-form";
-    }
-
-    @GetMapping("product-form")
+       @GetMapping("product-form")
     public String showProductForm(Model model) {
         Product product = new Product();
         model.addAttribute("product", product);
         model.addAttribute("productList", productList);
         return "product-form";
     }
-
+    @PostMapping("save-product")
+    public String saveProduct(@ModelAttribute("product") Product product) {
+        productList.add(product);
+        return "redirect:/product/product-form";
+    }
     @PostMapping("save-all-products")
     public String saveAllProducts(@AuthenticationPrincipal User user) {
         if (productList.isEmpty()) {return "redirect:/product/product-form";}

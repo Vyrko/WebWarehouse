@@ -12,6 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WarehouseService {
     private final WareHouseRepository wareHouseRepository;
+    private final CellProductService cellProductService;
 
     public void save(Warehouse warehouse, User user) {
         warehouse.setUser(user);
@@ -23,6 +24,10 @@ public class WarehouseService {
     public Warehouse getWarehouseById(Long id){ return wareHouseRepository.findById(id).orElse(null);}
 
     public void delete(Long warehouseId) {
+        deleteAllCellProduct(warehouseId);
         wareHouseRepository.deleteById(warehouseId);
+    }
+    private void deleteAllCellProduct(Long warehouseId){
+        cellProductService.deleteAll(warehouseId);
     }
 }

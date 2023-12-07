@@ -10,4 +10,7 @@ public interface CellProductRepository extends JpaRepository<CellProduct,Long> {
     List<CellProduct> findAllByCell_Id(Long cellId);
     CellProduct getByCell_IdAndProductId(Long cellId,Long productId);
     CellProduct getById(Long cellProductId);
+    List<CellProduct> findByProductId(Long productId);
+    void deleteByCell_Id(Long cellId);
+    void deleteByProductId(Long productId);
 }

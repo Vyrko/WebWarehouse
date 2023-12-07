@@ -28,10 +28,6 @@ public class CellController {
         cellService.fabricSave(warehouse);
         return "contact";
     }
-    @PostMapping("setProduct")
-    public String setProduct(Product product, Cell cell){
-        return "contact";
-    }
     @GetMapping("info/{cell_id}")
     public String updateCellForm(@PathVariable("cell_id") Long cell_id, Model model){
         List<CellProduct> cellProducts = cellProductService.findAllByCellId(cell_id);
@@ -70,5 +66,12 @@ public class CellController {
     public String updateCellUpdateCellProduct(@ModelAttribute("cellProduct") CellProduct cellProduct) {
         cellProductService.updateQuantity(cellProduct);
         return "redirect:/cell/info/" + cellProduct.getCell().getId();
+    }
+    @GetMapping("/select/{productId}")
+    public String selectByProductId(@PathVariable("productId") Long productId,
+                                    Model model){
+        List<CellProduct> cellProducts = cellProductService.findByProductId(productId);
+        model.addAttribute("cellProducts", cellProducts);
+       return "after-cell-select";
     }
 }

@@ -40,12 +40,13 @@ public class CellService {
         return cellRepository.findAllByWarehouseId(id);
     }
     public void updateCapacity(Long cellId, Long productId, int quantity){
+        Product product = productService.findById(productId);
         DecimalFormat decimalFormat = new DecimalFormat("#0.0", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
         Cell cellFromDB = cellRepository.findCellById(cellId);
-        Product product = productService.findById(productId);
         double result = Double.parseDouble(decimalFormat.format(cellFromDB.getCapacity() - product.getSize() * quantity));
         cellFromDB.setCapacity(result);
         cellRepository.save(cellFromDB);
     }
     public Cell findById(Long cellId) {return cellRepository.findCellById(cellId); }
+
 }

@@ -1,11 +1,13 @@
 package com.example.WebWarehouse.services;
 
+import com.example.WebWarehouse.entity.CellProduct;
 import com.example.WebWarehouse.entity.Product;
 import com.example.WebWarehouse.entity.User;
 import com.example.WebWarehouse.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductService{
     private final ProductRepository productRepository;
-
     public boolean saveProduct(Product product, User user) throws IOException{
         product.setUser(user);
         productRepository.save(product);
@@ -38,4 +39,17 @@ public class ProductService{
     }
 
     public Product findById(Long productId) {return productRepository.findProductById(productId);}
+    public void deleteById(Long productId) {productRepository.deleteById(productId);}
+
+    public void update(Product product) {
+        Product productDB = productRepository.findProductById(product.getId());
+        productDB.copyProduct(product);
+        productRepository.save(productDB);
+    }
+
+    public void decreaseQuantity(int quantity, Long id) {
+        Product productDB = findById(id);
+        productDB.setQuantity(productDB.getQuantity() - quantity);
+        productRepository.save(productDB);
+    }
 }

@@ -23,5 +23,9 @@ public class Product {
     @OneToOne
     @JoinColumn(name = "id_user")
     private User user;
-
+    public void copyProduct(Product other) {
+        this.name = other.name;
+        this.cost = other.cost;
+        this.postman = other.postman;
+    }
 }

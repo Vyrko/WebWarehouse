@@ -19,7 +19,8 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler(
                         "/static/**",
                         "/warehouse/static/**",
-                        "/cell/static/**"
+                        "/cell/static/**",
+                        "/product/static/**"
                 )
                 .addResourceLocations(
                         "classpath:/static/css",

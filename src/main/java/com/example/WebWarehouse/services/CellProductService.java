@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.PushBuilder;
 import java.util.List;
 
 @Service
@@ -72,6 +73,7 @@ public class CellProductService {
         setCellCapacity(cellProductFromDB.getCell().getId(),
                 cellProductFromDB.getProduct().getId(),
                 (int) cellProduct.getQuantity() * -1);
+
         if (cellProductFromDB.getQuantity() == 0) {
             cellProductRepository.deleteById(cellProduct.getId());
         } else {
@@ -79,7 +81,6 @@ public class CellProductService {
         }
 
     }
-
     public void setCellCapacity(Long cellId, Long productId, int quantity) {
         cellService.updateCapacity(cellId, productId, quantity);
     }

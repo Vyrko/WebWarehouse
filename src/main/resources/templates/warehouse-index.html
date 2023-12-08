@@ -31,6 +31,9 @@
     <link href="../static/css/main.css" rel="stylesheet">
 
 
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=077c086a-defc-4db6-85be-9b69465f6dae&lang=ru_RU" type="text/javascript"></script>
+
+
 </head>
 
 <body>
@@ -140,6 +143,7 @@
     </section><!-- End Services Section -->
 
     <!-- Модальное окно добавить склад-->
+
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -162,14 +166,16 @@
                         <div class="form-group mb-3">
                             <label for="location">Местоположение:</label>
                             <input type="text" class="form-control" id="location" name="location" placeholder="Введите местоположение">
+                            <div id="map" style="height: 300px;"></div>
                         </div>
-                        <button type="submit" class="btn btn-primary ">Добавить</button>
+                        <div class="form-group mb-3" id="selectedAddress"></div>
+                        <button type="submit" class="btn btn-primary">Добавить</button>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>
+
 
 
 
@@ -251,6 +257,53 @@
 
 <div id="preloader"></div>
 
+
+<script>
+    ymaps.ready(init);
+
+    function init() {
+        var myMap = new ymaps.Map("map", {
+            center: [53.9, 27.6], // Центр Минска
+            zoom: 10
+        });
+
+        // Создаем метку на карте (Placemark)
+        var placemark = new ymaps.Placemark(myMap.getCenter(), {
+            hintContent: 'Выберите адрес'
+        }, {
+            draggable: true // Делаем метку перемещаемой
+        });
+
+        myMap.geoObjects.add(placemark);
+
+        // Обработчик события "dragend" (окончание перемещения метки)
+        placemark.events.add('dragend', function (e) {
+            var coords = e.get('target').geometry.getCoordinates();
+            getAddress(coords);
+        });
+
+        // Обработчик события "click" на карте
+        myMap.events.add('click', function (e) {
+            var coords = e.get('coords');
+            // Перемещаем метку на новые координаты
+            placemark.geometry.setCoordinates(coords);
+            getAddress(coords);
+        });
+
+        // Функция для определения адреса по координатам
+        function getAddress(coords) {
+            ymaps.geocode(coords).then(function (res) {
+                var firstGeoObject = res.geoObjects.get(0);
+                var address = firstGeoObject.getAddressLine();
+                console.log('Выбранный адрес: ' + address);
+
+                // Вывод адреса в вашем элементе или сохранение в поле ввода
+                document.getElementById('location').value = address;
+                document.getElementById('selectedAddress').innerText = 'Выбранный адрес: ' + address;
+            });
+        }
+    }
+</script>
 <!-- Vendor JS Files -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>

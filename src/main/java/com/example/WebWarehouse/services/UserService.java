@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -30,4 +31,5 @@ public class UserService {
     public boolean emailExist(String email) {
         return userRepository.findByEmail(email) != null;
     }
+    public List<User> findAll(){return userRepository.findAll();}
 }

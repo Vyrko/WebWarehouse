@@ -3,6 +3,7 @@ package com.example.WebWarehouse.services;
 import com.example.WebWarehouse.entity.Cell;
 import com.example.WebWarehouse.entity.CellProduct;
 import com.example.WebWarehouse.entity.Product;
+import com.example.WebWarehouse.model.OrderFormModel;
 import com.example.WebWarehouse.repository.CellProductRepository;
 import com.example.WebWarehouse.repository.CellRepository;
 import com.example.WebWarehouse.repository.ProductRepository;
@@ -23,8 +24,8 @@ public class CellProductService {
     private final CellService cellService;
 
     public boolean save(Long cell_id, Long product_id, double quantity) {
-        if (checkCapacityCell(cell_id, quantity) && checkQuantityProduct(product_id,(int) quantity) ) {
-            productService.decreaseQuantity((int) quantity,product_id);
+        if (checkCapacityCell(cell_id, quantity) && checkQuantityProduct(product_id, (int) quantity)) {
+            productService.decreaseQuantity((int) quantity, product_id);
             CellProduct cellProduct = duplicateRecordCheck(cell_id, product_id, quantity);
             cellProductRepository.save(cellProduct);
             return true;
@@ -54,7 +55,8 @@ public class CellProductService {
         Cell cell = cellRepository.findCellById(cell_id);
         return cell.checkCapacity(quantity);
     }
-    private boolean checkQuantityProduct(Long productId, int quantity){
+
+    private boolean checkQuantityProduct(Long productId, int quantity) {
         return productRepository.findProductById(productId).getQuantity() >= quantity;
     }
 
@@ -69,7 +71,10 @@ public class CellProductService {
     public void updateQuantity(CellProduct cellProduct) {
 
         CellProduct cellProductFromDB = cellProductRepository.getById(cellProduct.getId());
+        double a = cellProduct.getQuantity();
+        double b = cellProductFromDB.getQuantity();
         cellProductFromDB.setQuantity(cellProductFromDB.getQuantity() - cellProduct.getQuantity());
+        int o = (int) cellProductFromDB.getQuantity();
         setCellCapacity(cellProductFromDB.getCell().getId(),
                 cellProductFromDB.getProduct().getId(),
                 (int) cellProduct.getQuantity() * -1);
@@ -81,6 +86,7 @@ public class CellProductService {
         }
 
     }
+
     public void setCellCapacity(Long cellId, Long productId, int quantity) {
         cellService.updateCapacity(cellId, productId, quantity);
     }

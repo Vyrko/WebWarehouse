@@ -1,6 +1,5 @@
 package com.example.WebWarehouse.controller;
 
-import com.example.WebWarehouse.entity.CellProduct;
 import com.example.WebWarehouse.services.CellProductService;
 import com.example.WebWarehouse.services.CellService;
 import com.example.WebWarehouse.services.ProductService;
@@ -8,7 +7,6 @@ import com.example.WebWarehouse.services.WarehouseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller

@@ -1,16 +1,20 @@
 package com.example.WebWarehouse.controller;
 
+import com.example.WebWarehouse.entity.Product;
 import com.example.WebWarehouse.entity.User;
 import com.example.WebWarehouse.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,8 +30,7 @@ public class UserController {
             return "quote";
         }
         userService.saveUser(user);
-        return "/";
+        return "index";
     }
-
 }
 

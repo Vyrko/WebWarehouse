@@ -6,6 +6,7 @@ import com.example.WebWarehouse.entity.Product;
 import com.example.WebWarehouse.entity.Warehouse;
 import com.example.WebWarehouse.services.CellProductService;
 import com.example.WebWarehouse.services.CellService;
+
 import com.example.WebWarehouse.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

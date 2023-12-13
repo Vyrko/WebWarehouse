@@ -71,10 +71,7 @@ public class CellProductService {
     public void updateQuantity(CellProduct cellProduct) {
 
         CellProduct cellProductFromDB = cellProductRepository.getById(cellProduct.getId());
-        double a = cellProduct.getQuantity();
-        double b = cellProductFromDB.getQuantity();
         cellProductFromDB.setQuantity(cellProductFromDB.getQuantity() - cellProduct.getQuantity());
-        int o = (int) cellProductFromDB.getQuantity();
         setCellCapacity(cellProductFromDB.getCell().getId(),
                 cellProductFromDB.getProduct().getId(),
                 (int) cellProduct.getQuantity() * -1);

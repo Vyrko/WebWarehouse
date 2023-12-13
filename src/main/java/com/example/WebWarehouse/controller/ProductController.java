@@ -3,6 +3,7 @@ package com.example.WebWarehouse.controller;
 import com.example.WebWarehouse.entity.Product;
 import com.example.WebWarehouse.entity.User;
 import com.example.WebWarehouse.services.CellProductService;
+import com.example.WebWarehouse.services.OrderService;
 import com.example.WebWarehouse.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,7 @@ public class ProductController {
     private List<Product> productList = new ArrayList<>();
     private final ProductService productService;
     private final CellProductService cellProductService;
+    private final OrderService orderService;
     @GetMapping("/")
     public String productMain(Model model, @AuthenticationPrincipal User user) {
         List<Product> products = productService.getAllProductByUserId(user.getId());
@@ -49,6 +52,7 @@ public class ProductController {
     public String deleteById(@PathVariable("productId") Long productId,
                                     Model model){
         cellProductService.deleteByProductId(productId);
+        orderService.deletByProductId(productId);
         productService.deleteById(productId);
         return "redirect:/product/";
     }

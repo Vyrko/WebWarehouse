@@ -1,11 +1,11 @@
 package com.example.WebWarehouse.controller;
 
-import com.example.WebWarehouse.services.CellProductService;
-import com.example.WebWarehouse.services.CellService;
-import com.example.WebWarehouse.services.ProductService;
-import com.example.WebWarehouse.services.WarehouseService;
+import com.example.WebWarehouse.entity.User;
+import com.example.WebWarehouse.services.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -13,34 +13,48 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 @RequestMapping("")
 public class MainController {
-    private final CellProductService cellProductService;
-    private final ProductService productService;
-    private final CellService cellService;
     private final WarehouseService warehouseService;
+    private final OrderService orderService;
+
     @GetMapping("/about")
-    public String openAbout(){
+    public String openAbout() {
         return "test";
     }
+
     @GetMapping("/contact")
-    public String openContact(){
+    public String openContact() {
         return "contact";
     }
+
     @GetMapping("/")
-    public String openHome(){
+    public String openHome() {
         return "index";
     }
+
     @GetMapping("/services")
-    public String openServices(){
+    public String openServices() {
         return "services";
     }
+
     @GetMapping("/pricing")
-    public String openPricing(){
+    public String openPricing() {
         return "pricing";
     }
+
     @GetMapping("/registration")
-    public String openRegistration(){
+    public String openRegistration() {
         return "registration";
     }
+
     @GetMapping("/login")
-    public String login() {return "login";}
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/user-info")
+    public String info(@AuthenticationPrincipal User user, Model model) {
+        model.addAttribute("warehouses", warehouseService.getWareHouseByUserId(user.getId()));
+        model.addAttribute("orders", orderService.barChar(user));
+        return "user-index";
+    }
 }

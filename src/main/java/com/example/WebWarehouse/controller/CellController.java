@@ -1,14 +1,12 @@
 package com.example.WebWarehouse.controller;
 
-import com.example.WebWarehouse.entity.Cell;
-import com.example.WebWarehouse.entity.CellProduct;
-import com.example.WebWarehouse.entity.Product;
-import com.example.WebWarehouse.entity.Warehouse;
+import com.example.WebWarehouse.entity.*;
 import com.example.WebWarehouse.services.CellProductService;
 import com.example.WebWarehouse.services.CellService;
 
 import com.example.WebWarehouse.services.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,10 +28,10 @@ public class CellController {
         return "contact";
     }
     @GetMapping("info/{cell_id}")
-    public String updateCellForm(@PathVariable("cell_id") Long cell_id, Model model){
+    public String updateCellForm(@PathVariable("cell_id") Long cell_id, Model model, @AuthenticationPrincipal User user){
         List<CellProduct> cellProducts = cellProductService.findAllByCellId(cell_id);
         Cell cell = cellService.findById(cell_id);
-        List<Product> products = productService.AllProduct();
+        List<Product> products = productService.getAllProductByUserId(user.getId());
         model.addAttribute("cell", cell);
         model.addAttribute("cellProductList", cellProducts);
         model.addAttribute("products", products);

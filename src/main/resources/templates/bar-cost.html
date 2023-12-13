@@ -28,7 +28,6 @@
     <link href="../static/vendor/aos/aos.css" rel="stylesheet">
 
     <!-- Template Main CSS File -->
-    <link href="../static/css/login.css" rel="stylesheet">
     <link href="../static/css/main.css" rel="stylesheet">
 
     <!-- =======================================================
@@ -91,7 +90,10 @@
             <div class="container position-relative">
                 <div class="row d-flex justify-content-center">
                     <div class="col-lg-6 text-center">
-                        <h2> Редактирование </h2>
+                        <h2>Доходность</h2>
+                        <p>Эта графическая форма предоставляет наглядное представление о распределении и сравнении
+                            обьемов закупок в различных категориях, позволяя быстро выявить тренды и понять ключевые
+                            показатели.</p>
                     </div>
                 </div>
             </div>
@@ -100,8 +102,8 @@
             <div class="container">
                 <ol>
                     <li><a href="/">Главная</a></li>
-                    <li>Товар</li>
-                    <li>Редактирование</li>
+                    <li>Графики</li>
+                    <li>Затраты на заказы</li>
                 </ol>
             </div>
         </nav>
@@ -109,31 +111,17 @@
 
 
     <!-- ======= Services Section ======= -->
-    <section class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6" data-aos="fade-up">
-                <form action="/product/update" method="post" class="border-4 p-4 shadow w-80" th:object="${product}">
-                    <input type="hidden" class="form-control" id="id" name="id" th:value="*{id}" >
-                    <div class="form-group">
-                        <label for="name">Название:</label>
-                        <input type="text" class="form-control" id="name" name="name" th:value="*{name}" >
-                    </div>
-                    <div class="form-group">
-                        <label for="postman">Поставщик:</label>
-                        <input type="text" class="form-control" id="postman" name="postman" th:value="*{postman}">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="cost">Стоимость:</label>
-                        <input type="text" class="form-control" id="cost" name="cost" th:value="*{cost}" >
-                    </div>
-                    <button type="submit" class="btn btn-dark btn-group " >Сохранить</button>
-                </form>
-            </div>
+    <section id="service" class="services pt-5">
+        <div class="container " data-aos="fade-up">
+            <canvas id="barChart"></canvas>
+
         </div>
-    </section>
+    </section><!-- End Services Section -->
+
+    <!-- Модальное окно добавить склад-->
 
 
-
+    <!-- ======= Frequently Asked Questions Section ======= -->
 
 
 </main><!-- End #main -->
@@ -213,6 +201,64 @@
 <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 <div id="preloader"></div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script th:inline="javascript">
+    var barData = /*[[${bar}]]*/ []; // Предполагается, что данные в массиве `bar` имеют поля `cost` и `id`
+    var supplierData = /*[[${supplier}]]*/ []; // Предполагается, что данные в массиве `supplier` имеют поля `cost` и `id`
+
+    // Вычисление суммы `cost` для переменной `bar`
+    var barSum = 0;
+    for (var i = 0; i < barData.length; i++) {
+        barSum += barData[i].cost;
+    }
+
+    // Вычисление суммы `cost` для переменной `supplier`
+    var supplierSum = 0;
+    for (var i = 0; i < supplierData.length; i++) {
+        supplierSum += supplierData[i].cost;
+    }
+
+    // Вычисление разницы между `supplierSum` и `barSum`
+    var difference = supplierSum - barSum;
+
+    // Создание массивов для значений `id` и `cost`
+    var labels = ["Затраты", "Прибыль", "Рентабельность"];
+    var data = [barSum, supplierSum, difference];
+
+    // Создание массива цветов для столбцов
+    var backgroundColors = ['rgba(255, 0, 0, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(75, 192, 192, 0.2)'];
+    var borderColors = ['rgba(255, 0, 0, 1)', 'rgba(75, 192, 192, 1)', 'rgba(75, 192, 192, 1)'];
+
+    // Изменение цвета столбца, если разница отрицательная
+    if (difference < 0) {
+        backgroundColors[2] = 'rgba(255, 0, 0, 0.2)';
+        borderColors[2] = 'rgba(255, 0, 0, 1)';
+    }
+
+    // Создание столбчатой диаграммы
+    var ctx = document.getElementById('barChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Затраты',
+                data: data,
+                backgroundColor: backgroundColors,
+                borderColor: borderColors,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 
 <!-- Vendor JS Files -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>

@@ -54,20 +54,25 @@
     <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
     <nav id="navbar" class="navbar">
       <ul>
-        <li><a href="/">Home</a></li>
+        <li><a href="/" class="active">Home</a></li>
         <li><a href="/warehouse/warehouse-index">Склад</a></li>
-        <li><a href="/product/product-form">Товар</a></li>
-        <li><a href="/pricing">Pricing</a></li>
         <li class="dropdown"><a href="/product/"><span>Товар</span> <i
                 class="bi bi-chevron-down dropdown-indicator"></i></a>
           <ul>
             <li><a href="/product/product-form">Добавить товар</a></li>
-            <li><a href="/product/delete">Удалить товар</a></li>
-            <li><a href="/product/update">Редактировать товар</a></li>
           </ul>
         </li>
-        <li><a href="/contact">Contact</a></li>
-        <li><a class="get-a-quote" href="/registration">Get a Quote</a></li>
+        <li class="dropdown"><a href="/"><span>Анализ закупок</span> <i
+                class="bi bi-chevron-down dropdown-indicator"></i></a>
+          <ul>
+            <li><a href="/order/chart">Объём закупки</a></li>
+            <li><a href="/order/bar-chart">Стоимость закупки</a></li>
+            <li><a href="/order/bar-cost">Доходность</a></li>
+          </ul>
+        </li>
+        <li><a href="/order/">Заказ</a></li>
+        <li><a href="/login">Вход</a></li>
+        <li><a class="get-a-quote" href="/user-info">Личный кабинет</a></li>
       </ul>
     </nav><!-- .navbar -->
 
@@ -115,7 +120,7 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Новый Товар</h5>
-              <form th:action="@{/product/save-product}" th:object="${product}" method="post">
+              <form th:action="@{/product/save-product}" th:object="${product}" method="post" onsubmit="return validateForm()">
                 <div class="mb-3">
                   <label for="product-name" class="form-label">Название товара</label>
                   <input type="text" class="form-control" id="product-name" th:field="*{name}" placeholder="Введите название товара">
@@ -135,6 +140,7 @@
                   <label for="product-size" class="form-label">Размер</label>
                   <input class="form-control" type="text" th:field="*{size}" id="product-size" placeholder="Введите размер товара">
                 </div>
+                <div id="error-message" style="color: red;"></div>
                 <button type="submit" class="btn btn-primary">Создать товар</button>
               </form>
 
@@ -172,7 +178,38 @@
       </div>
     </div>
   </section><!-- End Services Section -->
+  <script>
+    function validateForm() {
+      var costInput = document.getElementById("product-cost");
+      var sizeInput = document.getElementById("product-size");
+      var costValue = costInput.value;
+      var sizeValue = sizeInput.value;
 
+      // Проверка формата поля "cost"
+      if (!isValidFormat(costValue)) {
+        showError("Неверный формат поля Цена товара");
+        return false;
+      }
+
+      // Проверка формата поля "size"
+      if (!isValidFormat(sizeValue)) {
+        showError("Неверный формат поля Размер");
+        return false;
+      }
+
+      return true;
+    }
+
+    function isValidFormat(value) {
+      var regex = /^\d+(\.\d{1,2})?$/; // Регулярное выражение для чисел с точностью до двух знаков после запятой
+      return regex.test(value);
+    }
+
+    function showError(message) {
+      var errorMessage = document.getElementById("error-message");
+      errorMessage.textContent = message;
+    }
+  </script>
   <!-- ======= Frequently Asked Questions Section ======= -->
   <section id="faq" class="faq">
     <div class="container" data-aos="fade-up">

@@ -57,20 +57,25 @@
         <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
         <nav id="navbar" class="navbar">
             <ul>
-                <li><a href="/">Home</a></li>
+                <li><a href="/" class="active">Home</a></li>
                 <li><a href="/warehouse/warehouse-index">Склад</a></li>
-                <li><a href="/product/product-form">Товар</a></li>
-                <li><a href="/pricing">Pricing</a></li>
                 <li class="dropdown"><a href="/product/"><span>Товар</span> <i
                         class="bi bi-chevron-down dropdown-indicator"></i></a>
                     <ul>
                         <li><a href="/product/product-form">Добавить товар</a></li>
-                        <li><a href="/product/delete">Удалить товар</a></li>
-                        <li><a href="/product/update">Редактировать товар</a></li>
                     </ul>
                 </li>
-                <li><a href="/contact">Contact</a></li>
-                <li><a class="get-a-quote" href="/registration">Get a Quote</a></li>
+                <li class="dropdown"><a href="/"><span>Анализ закупок</span> <i
+                        class="bi bi-chevron-down dropdown-indicator"></i></a>
+                    <ul>
+                        <li><a href="/order/chart">Объём закупки</a></li>
+                        <li><a href="/order/bar-chart">Стоимость закупки</a></li>
+                        <li><a href="/order/bar-cost">Доходность</a></li>
+                    </ul>
+                </li>
+                <li><a href="/order/">Заказ</a></li>
+                <li><a href="/login">Вход</a></li>
+                <li><a class="get-a-quote" href="/user-info">Личный кабинет</a></li>
             </ul>
         </nav><!-- .navbar -->
 
@@ -120,6 +125,7 @@
                         <div class="card-body">
 
                             <input type="hidden" id="supplierLocation" th:value="${supplierWarehouse}"/>
+                            <input type="hidden" id="totalCost" th:value="${totalCost}"/>
                             <input type="hidden" id="buyerLocation" th:value="${buyerWarehouse}"/>
                             <h5 class="card-title">Информация заказа</h5>
                             <div th:text="'Номер поставщика: ' + *{orderModel.getSupplier()}" class="mb-3"></div>
@@ -149,7 +155,7 @@
                                         <input type="hidden" name="quantities" th:value="${quantity}">
                                     </div>
                                     <div> Стоимость доставки
-                                        <input type="text" name="cost" id="cost" readonly>
+                                        <input  type="text" name="cost" id="cost" readonly>
                                     </div>
                                     <input type="submit" value="Подтвердить" class="btn btn-success">
 
@@ -226,10 +232,11 @@
                     });
 
                     myMap.geoObjects.add(multiRoute);
-
+                    var totalCostElement = document.getElementById('totalCost');
+                    var totalCost = parseFloat(totalCostElement.value); // Предполагается, что `totalCost` содержит числовое значение
                     // Рассчитываем стоимость перевозки
                     var distance = ymaps.coordSystem.geo.getDistance(supplierCoordinates, buyerCoordinates) / 1000;
-                    var cost = distance * 3.5; // Замените costPerKilometer на вашу стоимость за километр
+                    var cost = distance * 3.5 + totalCost; // Замените costPerKilometer на вашу стоимость за километр
 
                     document.getElementById('cost').value = cost.toFixed(2);
                     console.log('Тип данных cost:', typeof cost);

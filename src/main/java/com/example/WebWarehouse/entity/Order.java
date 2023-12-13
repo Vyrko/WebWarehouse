@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Data
@@ -29,7 +30,7 @@ public class Order {
     private int quantity;
 
     private double cost;
-    private LocalDateTime orderDate;
+    private String orderDate;
 
     public Order(User buyer, User supplier, Product product, double cost, int quantity) {
         this.buyer = buyer;
@@ -37,6 +38,6 @@ public class Order {
         this.product = product;
         this.cost = cost;
         this.quantity=quantity;
-        this.orderDate = LocalDateTime.now();
+        this.orderDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy-MM-dd"));
     }
 }

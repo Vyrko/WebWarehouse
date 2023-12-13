@@ -20,6 +20,7 @@ public class MvcConfig implements WebMvcConfigurer {
                         "/static/**",
                         "/warehouse/static/**",
                         "/cell/static/**",
+                        "/order/static/**",
                         "/product/static/**"
                 )
                 .addResourceLocations(

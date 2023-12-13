@@ -1,48 +1,29 @@
-<canvas id="orderChart"></canvas>
+<script inline="javascript">
+  // Получение данных ячеек из модели
+  var cells = /*[[${cells}]]*/ [];
 
-<script th:inline="javascript">
-    /* Получение данных из атрибутов модели */
-    var productNames = [[${product.![name]}]];
-    var orderDates = [[${date}]];
-    var quantities = [[${quantity}]] ;
+  // Формирование данных для столбчатой диаграммы
+  var chartData = cells.map(function(cell) {
+    return {
+      cell_name: cell.cell_name,
+      capacity: cell.capacity
+    };
+  });
 
-    // Создание графика
-    var ctx = document.getElementById('orderChart').getContext('2d');
-    var orderChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: orderDates,
-            datasets: [{
-                label: 'Количество заказов',
-                data: quantities,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                fill: true
-            }]
-        },
-        options: {
-            scales: {
-                x: {
-                    display: true,
-                    title: {
-                        display: true,
-                        text: 'Дата покупки'
-                    }
-                },
-                y: {
-                    display: true,
-                    title: {
-                        display: true,
-                        text: 'Количество заказов'
-                    }
-                }
-            },
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'График заказов'
-                }
-            }
-        }
-    });
+  // Отображение столбчатой диаграммы
+  var options = {
+    series: [{
+      data: chartData.map(function(data) {
+        return data.capacity;
+      })
+    }],
+    xaxis: {
+      categories: chartData.map(function(data) {
+        return data.cell_name;
+      })
+    }
+  };
+
+  var chart = new ApexCharts(document.querySelector("#chart"), options);
+  chart.render();
 </script>

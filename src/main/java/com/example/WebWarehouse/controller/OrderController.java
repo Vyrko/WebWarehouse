@@ -1,7 +1,9 @@
 package com.example.WebWarehouse.controller;
 
+import com.example.WebWarehouse.entity.Cell;
 import com.example.WebWarehouse.entity.Order;
 import com.example.WebWarehouse.entity.User;
+import com.example.WebWarehouse.model.CharOrder;
 import com.example.WebWarehouse.model.OrderFormModel;
 import com.example.WebWarehouse.services.*;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +24,8 @@ public class OrderController {
     private final ProductService productService;
     private final UserService userService;
     private final CellProductService cellProductService;
-    @GetMapping("/")
+    private final CellService cellService;
+        @GetMapping("/")
     public String productMain(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("users", userService.findAll());
         model.addAttribute("activeUser", user);
@@ -40,6 +43,7 @@ public class OrderController {
         model.addAttribute("supplierWarehouse", warehouseService.getWareHouseByUserId(orderFormModel.getSupplier()).get(0).getLocation());
         model.addAttribute("buyerWarehouse", warehouseService.getWareHouseByUserId(orderFormModel.getBuyer()).get(0).getLocation());
         model.addAttribute("orderModel", orderFormModel);
+        model.addAttribute("totalCost", orderService.calculateCost(orderFormModel));
         return "order-confirmation";
     }
     @PostMapping("/saveOrders")
@@ -50,5 +54,16 @@ public class OrderController {
         orderFormModel.setProductIds(saveProduct);
         orderService.updateAfterOrder(orderFormModel);
         return "index";
+    }
+    @GetMapping("/chart")
+    public String chart(@AuthenticationPrincipal User user,Model model) {
+        model.addAttribute("chart", orderService.getChart(user));
+        return "maping";
+    }
+    @GetMapping("/bar-cost")
+    public String barChart(@AuthenticationPrincipal User user,Model model) {
+        model.addAttribute("bar", orderService.barChar(user) );
+        model.addAttribute("supplier", orderService.findBySupplier(user) );
+        return "bar-cost";
     }
 }

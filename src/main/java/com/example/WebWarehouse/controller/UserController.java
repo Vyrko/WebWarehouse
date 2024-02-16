@@ -2,6 +2,7 @@ package com.example.WebWarehouse.controller;
 
 import com.example.WebWarehouse.entity.Product;
 import com.example.WebWarehouse.entity.User;
+import com.example.WebWarehouse.entity.WarehouseWorkerLink;
 import com.example.WebWarehouse.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -32,5 +33,6 @@ public class UserController {
         userService.saveUser(user);
         return "index";
     }
+
 }
 

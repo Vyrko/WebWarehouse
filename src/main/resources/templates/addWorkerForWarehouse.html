@@ -120,18 +120,22 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Новый Товар</h5>
-                            <form th:action="@{/product/save-product}" method="post" >
+                            <form th:action="@{/workerLink/save}" th:object="${warehouseWorkerLink}" method="post" >
                                 <div class="mb-3">
                                     <label for="warehouse" class="form-label">Склад</label>
-                                    <select id="warehouse" name="warehouseId">
+                                    <select id="warehouse" name="warehouse">
                                         <option th:each="warehouse : ${warehouses}" th:value="${warehouse.id}" th:text="${warehouse.name}"></option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
                                     <label for="worker" class="form-label">Сотрудник</label>
-                                    <select id="worker" name="workerId">
+                                    <select id="worker" name="worker">
                                         <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"></option>
                                     </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="jobTitle" class="form-label">Должность</label>
+                                    <input name="jobTitle" type="text" class="form-control" id="jobTitle" th:field="*{jobTitle}" placeholder="Введите поставщика">
                                 </div>
                                 <button type="submit" class="btn btn-primary">Создать товар</button>
                             </form>
@@ -142,27 +146,23 @@
                 <div class="col-md-6">
                     <div class="card overflow-auto">
                         <div class="card-body">
-                            <!--<h5 class="card-title">Созданные товары</h5>
-                            <form th:action="@{/product/save-all-products}" th:object="${productList}" method="post">
+                            <h5 class="card-title">Созданные товары</h5>
+                            <form th:action="@{/workerLink/save-all}" th:object="${warehouseWorkerLinks}" method="post">
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th>Название</th>
-                                        <th>Стоимость</th>
-                                        <th>Поставщик</th>
-                                        <th>Занимаемая площадь</th>
+                                        <th>Склад</th>
+                                        <th>Сотрудник</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="product : ${productList}">
-                                        <td th:text="${product.name}"></td>
-                                        <td th:text="${product.cost}"></td>
-                                        <td th:text="${product.postman}"></td>
-                                        <td th:text="${product.size}"></td>
+                                    <tr th:each="link : ${warehouseWorkerLinks}">
+                                        <td th:text="${link.warehouse.name}"></td>
+                                        <td th:text="${link.worker.name}"></td>
                                     </tr>
                                     </tbody>
                                 </table>
-                                <button th:if="${!productList.isEmpty()}" type="submit" class="btn btn-primary btn-dark d-block mx-auto">Сохранить</button>-->
+                                <button th:if="${!warehouseWorkerLinks.isEmpty()}" type="submit" class="btn btn-primary btn-dark d-block mx-auto">Сохранить</button>
                             </form>
                         </div>
                     </div>

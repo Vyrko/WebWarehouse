@@ -49,6 +49,7 @@ public class User implements UserDetails {
     private void init(){dataOfCreated=LocalDateTime.now();}
 
     public boolean isAdmin(){return role.contains(Role.ROLE_ADMIN);}
+    public boolean isWorker(){return role.contains(Role.ROLE_USER);}
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

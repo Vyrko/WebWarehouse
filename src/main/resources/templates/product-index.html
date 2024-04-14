@@ -127,7 +127,7 @@
                             <h3 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                        th:data-bs-target="'#faq-content-' + ${product.id}">
-                                    <p th:text="'Номер: ' + ${product.id}"></p>
+                                    <p th:text="'Номер: ' + ${product.name}"></p>
                                 </button>
                             </h3>
                             <div th:id="'faq-content-' + ${product.id}"  class="accordion-collapse collapse" data-bs-parent="#faqlist">

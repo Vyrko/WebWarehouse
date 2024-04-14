@@ -8,6 +8,7 @@ import com.example.WebWarehouse.services.CellProductService;
 import com.example.WebWarehouse.services.CellService;
 import com.example.WebWarehouse.services.WarehouseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,7 @@ public class WareHouseController {
     private final CellProductService cellProductService;
 
     @PostMapping("create")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String addWareHouse(Warehouse warehouse,@AuthenticationPrincipal User user) {
         warehouseService.save(warehouse,user);
         cellService.fabricSave(warehouse);
@@ -31,11 +33,13 @@ public class WareHouseController {
     }
     @GetMapping("warehouse-index")
     public String showWarehouseForm(Model model,@AuthenticationPrincipal User user ) {
-        List<Warehouse> warehouseList = warehouseService.getWareHouseByUserId(user.getId());
+        List<Warehouse> warehouseList = warehouseService.findByWorkerId(user.getId());
+        model.addAttribute("user", user);
         model.addAttribute("warehouseList", warehouseList);
         return "warehouse-index";
     }
     @GetMapping("delete/{warehouse_id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String wareHouseDelete(@PathVariable("warehouse_id") Long warehouse_id) {
         warehouseService.delete(warehouse_id);
         return "redirect:/warehouse/warehouse-index";
@@ -45,7 +49,6 @@ public class WareHouseController {
     {
         Warehouse warehouse = warehouseService.getWarehouseById(warehouse_id);
         List<Cell> cells = cellService.findAllByWarehouseId(warehouse_id);
-        /*List<CellProduct> cellProducts.getAll();*/
         model.addAttribute("cells",cells);
         model.addAttribute("warehouse", warehouse);
         return "/warehouse-info";

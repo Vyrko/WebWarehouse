@@ -7,6 +7,7 @@ import com.example.WebWarehouse.model.CharOrder;
 import com.example.WebWarehouse.model.OrderFormModel;
 import com.example.WebWarehouse.services.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,7 @@ public class OrderController {
     private final CellProductService cellProductService;
     private final CellService cellService;
         @GetMapping("/")
+        @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String productMain(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("users", userService.findAll());
         model.addAttribute("activeUser", user);
@@ -39,6 +41,7 @@ public class OrderController {
         return "order-index";
     }
     @GetMapping("/confirmation")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String confirmation(OrderFormModel orderFormModel, Model model) {
         model.addAttribute("supplierWarehouse", warehouseService.getWareHouseByUserId(orderFormModel.getSupplier()).get(0).getLocation());
         model.addAttribute("buyerWarehouse", warehouseService.getWareHouseByUserId(orderFormModel.getBuyer()).get(0).getLocation());
@@ -47,6 +50,7 @@ public class OrderController {
         return "order-confirmation";
     }
     @PostMapping("/saveOrders")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String saveOrders(OrderFormModel orderFormModel) {
         final List<Long> saveProduct = new ArrayList<>(orderFormModel.getProductIds());
         orderService.saveOrders(orderFormModel);
@@ -56,11 +60,13 @@ public class OrderController {
         return "index";
     }
     @GetMapping("/chart")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String chart(@AuthenticationPrincipal User user,Model model) {
         model.addAttribute("chart", orderService.getChart(user));
         return "maping";
     }
     @GetMapping("/bar-cost")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String barChart(@AuthenticationPrincipal User user,Model model) {
         model.addAttribute("bar", orderService.barChar(user) );
         model.addAttribute("supplier", orderService.findBySupplier(user) );

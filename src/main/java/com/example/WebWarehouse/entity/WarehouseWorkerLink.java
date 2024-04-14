@@ -28,7 +28,11 @@ public class WarehouseWorkerLink {
     private Warehouse warehouse;
 
     private String jobTitle;
-    public WarehouseWorkerLink(){
+    public WarehouseWorkerLink(){}
 
+    public WarehouseWorkerLink(User worker, Warehouse warehouse, String jobTitle) {
+        this.worker = worker;
+        this.warehouse = warehouse;
+        this.jobTitle = jobTitle;
     }
 }

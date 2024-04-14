@@ -21,7 +21,6 @@ public class UserService {
     public boolean saveUser(User user) throws IOException {
         if (userRepository.findByEmail(user.getEmail()) !=null) return false;
         user.setActive(true);
-        user.getRole().add(Role.ROLE_USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         log.info("Save new user email: {}", user.getEmail());
         userRepository.save(user);

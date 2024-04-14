@@ -53,7 +53,7 @@ public class MainController {
 
     @GetMapping("/user-info")
     public String info(@AuthenticationPrincipal User user, Model model) {
-        model.addAttribute("warehouses", warehouseService.getWareHouseByUserId(user.getId()));
+        model.addAttribute("warehouses", warehouseService.findByWorkerId(user.getId()));
         model.addAttribute("orders", orderService.barChar(user));
         return "user-index";
     }

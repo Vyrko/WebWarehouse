@@ -120,7 +120,7 @@
                                 <th>Название</th>
                                 <th>Площадь</th>
                                 <th>Местонахождение</th>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                <button th:if="${user.getRole() == 'ROLE_ADMIN'}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                                     Добавить Склад
                                 </button>
                             </tr>
@@ -135,8 +135,8 @@
                                         <a  class="text-white" th:href="'/warehouse/info/'+ ${warehouse.id}">Информация</a>
                                     </button>
                                     </button>
-                                    <button type="button" class="btn btn-danger"  >
-                                        <a  class="text-white" th:href="'/warehouse/delete/'+ ${warehouse.id}">Удалить запись</a>
+                                    <button type="button" class="btn btn-danger" th:if="${user != null and user.isAdmin()}" > <!--th:if="*{user != null and user.isAdmin()}"-->
+                                        <a  class="text-white" th:href="'/warehouse/delete/'+ ${warehouse.id}">Удалить склад</a>
                                     </button>
                                 </td>
                             </tr>
@@ -150,7 +150,7 @@
 
     <!-- Модальное окно добавить склад-->
 
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

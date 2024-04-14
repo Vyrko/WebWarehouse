@@ -43,9 +43,9 @@ public class WarehouseWorkerController {
         warehouseWorkerLinks.add(warehouseWorkerLink);
         return "redirect:/warehouse-worker";
     }
-    @PostMapping("workerLink/save-all")
+    @PostMapping("workerLink/save-all") /*добавь сообщение о ошибке при не заполенной форме*/
     public String saveAllWorker() {
-        if (warehouseWorkerLinks.isEmpty()) {return "redirect:/product/product-form";}
+        if (warehouseWorkerLinks.isEmpty()) {return "redirect:/warehouse-worker";}
         warehouseWorkerLinkService.saveAllWorker(warehouseWorkerLinks);
         warehouseWorkerLinks.clear();
         return "redirect:/";

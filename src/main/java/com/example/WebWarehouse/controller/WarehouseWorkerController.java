@@ -1,13 +1,11 @@
 package com.example.WebWarehouse.controller;
 
-import com.example.WebWarehouse.entity.Product;
-import com.example.WebWarehouse.entity.User;
-import com.example.WebWarehouse.entity.Warehouse;
-import com.example.WebWarehouse.entity.WarehouseWorkerLink;
+import com.example.WebWarehouse.entity.*;
 import com.example.WebWarehouse.services.UserService;
 import com.example.WebWarehouse.services.WarehouseService;
 import com.example.WebWarehouse.services.WarehouseWorkerLinkService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,8 +26,9 @@ public class WarehouseWorkerController {
     private final List<WarehouseWorkerLink> warehouseWorkerLinks=new ArrayList<>();
 
     @GetMapping("warehouse-worker")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String  warehouseWorkerForm(Model model, @AuthenticationPrincipal User user){
-        List<User> users = userService.findAll();
+        List<User> users = userService.findByRoleAndBusy(Role.ROLE_USER,false);
         List<Warehouse> warehouses = warehouseService.getWareHouseByUserId(user.getId());
         WarehouseWorkerLink warehouseWorkerLink = new WarehouseWorkerLink();
         model.addAttribute("users",users);
@@ -50,4 +49,5 @@ public class WarehouseWorkerController {
         warehouseWorkerLinks.clear();
         return "redirect:/";
     }
+
 }

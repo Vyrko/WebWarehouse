@@ -17,11 +17,13 @@ public class WarehouseService {
     private final WareHouseRepository wareHouseRepository;
     private final CellProductService cellProductService;
     private final WarehouseWorkerLinkService warehouseWorkerLinkService;
+    private final UserService userService;
 
     public void save(Warehouse warehouse, User user) {
         warehouse.setUser(user);
         wareHouseRepository.save(warehouse);
         warehouseWorkerLinkService.addAdmin(user, warehouse);
+        userService.setBusy(true,user);
     }
 
     public List<Warehouse> getWareHouseByUserId(Long id) { return wareHouseRepository.findAllByUserId(id);}

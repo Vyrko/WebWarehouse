@@ -31,4 +31,16 @@ public class UserService {
         return userRepository.findByEmail(email) != null;
     }
     public List<User> findAll(){return userRepository.findAll();}
+
+    public List<User> findByUserRole(String role) {
+        return userRepository.findByRole(role);
+    }
+    public List<User> findByRoleAndBusy(Role role, boolean busy){
+        return userRepository.findByRoleAndBusy(role,false);
+    }
+
+    public void setBusy(boolean busy, User user) {
+        user.setBusy(busy);
+        userRepository.save(user);
+    }
 }

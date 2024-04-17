@@ -120,7 +120,7 @@
                                 <th>Название</th>
                                 <th>Площадь</th>
                                 <th>Местонахождение</th>
-                                <button th:if="${user.getRole() == 'ROLE_ADMIN'}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                <button th:if="${user != null and user.isAdmin()}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                                     Добавить Склад
                                 </button>
                             </tr>
@@ -131,7 +131,7 @@
                                 <td th:text="${warehouse.capacity}"></td>
                                 <td th:text="${warehouse.location}"></td>
                                 <td>
-                                    <button type="button" class="btn btn-primary">
+                                    <button  type="button" class="btn btn-primary">
                                         <a  class="text-white" th:href="'/warehouse/info/'+ ${warehouse.id}">Информация</a>
                                     </button>
                                     </button>

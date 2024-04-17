@@ -13,6 +13,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class WarehouseWorkerLinkService {
+    private final UserService userService;
     private final WarehouseWorkerLinkRepository warehouseWorkerLinkRepository;
     public void saveAllWorker(List<WarehouseWorkerLink> warehouseWorkerLinks) {
         warehouseWorkerLinkRepository.saveAll(warehouseWorkerLinks);
@@ -22,10 +23,14 @@ public class WarehouseWorkerLinkService {
     }
 
     public void addAdmin(User user, Warehouse warehouse) {
-        warehouseWorkerLinkRepository.save(new WarehouseWorkerLink(user,warehouse,"Администратор" + warehouse.getName()));
+        warehouseWorkerLinkRepository.save(new WarehouseWorkerLink(user,warehouse,"Администратор " + warehouse.getName()));
     }
 
     public void deleteByWarehouse(Long warehouseId) {
         warehouseWorkerLinkRepository.deleteWarehouseWorkerLinkByWarehouseId(warehouseId);
     }
+    /*public List<User> getAllUnoccupiedWorkers (){
+        List<User> userDb = userService.findByUserRole("ROLE_USER");
+        List<WarehouseWorkerLink> workers = warehouseWorkerLinkRepository.findAll();
+    }*/
 }

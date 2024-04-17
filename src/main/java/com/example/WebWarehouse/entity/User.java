@@ -43,6 +43,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> role=new HashSet<>();
     private LocalDateTime dataOfCreated;
+    private boolean busy;
 
 
     @PrePersist

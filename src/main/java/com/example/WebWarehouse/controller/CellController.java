@@ -31,7 +31,7 @@ public class CellController {
     public String updateCellForm(@PathVariable("cell_id") Long cell_id, Model model, @AuthenticationPrincipal User user){
         List<CellProduct> cellProducts = cellProductService.findAllByCellId(cell_id);
         Cell cell = cellService.findById(cell_id);
-        List<Product> products = productService.getAllProductByUserId(user.getId());
+        List<Product> products = productService.getAllProductByUserId(cell.getWarehouse().getUser().getId());
         model.addAttribute("cell", cell);
         model.addAttribute("cellProductList", cellProducts);
         model.addAttribute("products", products);

@@ -136,6 +136,79 @@
         var products = /*[[${products}]]*/ [];
 
         function addProductField() {
+            var productField = document.createElement("div");
+            productField.className = "form-group";
+
+            var productNameLabel = document.createElement("label");
+            productNameLabel.textContent = "Название товара:";
+            productField.appendChild(productNameLabel);
+
+            var productSelect = document.createElement("select");
+            productSelect.name = "productIds";
+            productSelect.className = "form-control";
+
+            for (var i = 0; i < products.length; i++) {
+                var option = document.createElement("option");
+                option.value = products[i].id;
+                option.text = products[i].name;
+                productSelect.appendChild(option);
+            }
+            productField.appendChild(productSelect);
+
+            var quantityField = document.createElement("div");
+            quantityField.className = "d-flex align-items-center";
+
+            var incrementButton = document.createElement("button");
+            incrementButton.type = "button";
+            incrementButton.textContent = "+";
+            incrementButton.className = "btn btn-primary mr-2";
+            incrementButton.onclick = function() {
+                var currentValue = parseInt(quantityInput.value) || 0;
+                if (currentValue < products[productSelect.selectedIndex].quantity) {
+                    quantityInput.value = currentValue + 1;
+                }
+            };
+            quantityField.appendChild(incrementButton);
+
+            var quantityInput = document.createElement("input");
+            quantityInput.type = "number";
+            quantityInput.name = "quantities";
+            quantityInput.required = true;
+            quantityInput.className = "form-control mr-2";
+            quantityInput.min = 1; // Минимальное значение счетчика
+            quantityInput.style.width = "60px"; // Установка ширины поля ввода
+            quantityField.appendChild(quantityInput);
+
+            var decrementButton = document.createElement("button");
+            decrementButton.type = "button";
+            decrementButton.textContent = "-";
+            decrementButton.className = "btn btn-primary";
+            decrementButton.onclick = function() {
+                if (parseInt(quantityInput.value) > 1) {
+                    quantityInput.value = parseInt(quantityInput.value) - 1;
+                }
+            };
+            quantityField.appendChild(decrementButton);
+
+            productField.appendChild(quantityField);
+
+            var removeButton = document.createElement("button");
+            removeButton.type = "button";
+            removeButton.textContent = "Убрать товар";
+            removeButton.className = "btn btn-danger";
+            removeButton.onclick = function() {
+                productField.remove();
+            };
+            productField.appendChild(removeButton);
+
+            document.getElementById("productFields").appendChild(productField);
+        }
+    </script>
+
+   <!-- <script th:inline="javascript">
+        var products = /*[[${products}]]*/ [];
+
+        function addProductField() {
             var productSelect = document.createElement("select");
             productSelect.name = "productIds";
             productSelect.className = "form-control";
@@ -174,7 +247,7 @@
 
             document.getElementById("productFields").appendChild(productField);
         }
-    </script>
+    </script>-->
 
 </main><!-- End #main -->
 

@@ -76,7 +76,7 @@ public class CellProductService {
                 cellProductFromDB.getProduct().getId(),
                 (int) cellProduct.getQuantity() * -1);
 
-        if (cellProductFromDB.getQuantity() == 0) {
+        if (cellProductFromDB.getQuantity() <= 0) {
             cellProductRepository.deleteById(cellProduct.getId());
         } else {
             cellProductRepository.save(cellProductFromDB);

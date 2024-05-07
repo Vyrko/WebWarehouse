@@ -45,7 +45,8 @@ public class CellService {
         DecimalFormat decimalFormat = new DecimalFormat("#0.0", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
         Cell cellFromDB = cellRepository.findCellById(cellId);
         double result = Double.parseDouble(decimalFormat.format(cellFromDB.getCapacity() - product.getSize() * quantity));
-        cellFromDB.setCapacity(result);
+        if (result<=10) cellFromDB.setCapacity(result);
+        else cellFromDB.setCapacity(10);
         cellRepository.save(cellFromDB);
     }
     public Cell findById(Long cellId) {return cellRepository.findCellById(cellId); }

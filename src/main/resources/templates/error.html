@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Error Page</title>
+  <style>
+    .rounded-box {
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      max-width: 50%;
+      margin: 0 auto;
+    }
+
+    .rounded-box img {
+      width: 50%;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .rounded-box p {
+      font-size: 18px;
+      color: #333;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="rounded-box">
+  <div th:switch="${status}">
+    <div th:case="403">
+      <img src="../static/img/Chat/403.jpg" alt="403 Forbidden">
+      <p>Forbidden (403)</p>
+    </div>
+    <div th:case="404">
+      <img src="../static/img/Chat/404.jpg" alt="404 Not Found">
+      <p>Not Found (404)</p>
+    </div>
+    <div th:case="500">
+      <img src="../static/img/Chat/500.jpg" alt="500 Internal Server Error">
+      <p>Internal Server Error (500)</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -83,10 +83,10 @@ public class OrderService {
     public double calculateCost(OrderFormModel orderFormModel){
         double cost=0;
         for (int i=0;i< orderFormModel.getProductIds().size();i++){
-            cost += productRepository.findProductById(orderFormModel.getProductIds().get(i)).getCost() + orderFormModel.getQuantities().get(i);
+            cost += productRepository.findProductById(orderFormModel.getProductIds().get(i)).getCost() * orderFormModel.getQuantities().get(i);
         }
-        if (orderFormModel.getQuantities().size() > 3) {
-            double discount = cost * 0.1; // Calculate the discount amount (10% of the cost)
+        if (cost > 300) {
+            double discount = cost * 0.15; // Calculate the discount amount (10% of the cost)
             cost -= discount; // Apply the discount to the cost
         }
         return cost;

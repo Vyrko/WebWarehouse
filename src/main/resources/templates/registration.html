@@ -49,7 +49,7 @@
     <a href="/" class="logo d-flex align-items-center">
       <!-- Uncomment the line below if you also wish to use an image logo -->
       <!-- <img src="assets/img/logo.png" alt=""> -->
-      <h1>Logis</h1>
+      <h1>Твой Склад</h1>
     </a>
 
     <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
@@ -110,13 +110,16 @@
   <!-- ======= Services Section ======= -->
   <section id="service" class="services pt-5">
     <div class="wrapper">
-      <form action="/regist" method="post" class="login">
+      <form action="/regist" method="post" class="login" th:object="${newUser}">
         <p class="title">Регистрация</p>
         <input name="name" type="text" placeholder="Имя" required />
+        <p  th:if="${nameError != null}" th:text="${nameError}" style="color: red"></p>
         <i class="fa fa-user"></i>
-        <input name="email" type="text" placeholder="Адрес почты" required />
+        <input  name="email" type="text" placeholder="Адрес почты" required />
+        <p  th:if="${emailError != null}" th:text="${emailError}" style="color: red"></p>
         <i class="fa fa-user"></i>
-        <input name="phoneNumber" type="text" placeholder="Номер телефона" required />
+        <input  name="phoneNumber" type="text" placeholder="Номер телефона" required />
+        <p  th:if="${phoneNumberError != null}" th:text="${phoneNumberError}" style="color: red"></p>
         <i class="fa fa-user"></i>
         <input name="password" type="password" placeholder="Пароль" required />
         <i class="fa fa-key"></i>
@@ -144,8 +147,8 @@
     <div class="container" data-aos="fade-up">
 
       <div class="section-header">
-        <span>Frequently Asked Questions</span>
-        <h2>Frequently Asked Questions</h2>
+        <span>Часто задаваемые вопросы</span>
+        <h2>Часто задаваемые вопросы</h2>
 
       </div>
 
@@ -156,100 +159,69 @@
 
             <div class="accordion-item">
               <h3 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#faq-content-1">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-1">
                   <i class="bi bi-question-circle question-icon"></i>
-                  Non consectetur a erat nam at lectus urna duis?
+                  Как сохранить склад?
                 </button>
               </h3>
               <div id="faq-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist">
                 <div class="accordion-body">
-                  Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet
-                  non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor
-                  purus non.
+                  В шапке приложения  нажмите: Склад->Добавить Склад.
                 </div>
               </div>
             </div><!-- # Faq item-->
 
             <div class="accordion-item">
               <h3 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#faq-content-2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-2">
                   <i class="bi bi-question-circle question-icon"></i>
-                  Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque?
+                  Как добавить товар?
                 </button>
               </h3>
               <div id="faq-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist">
                 <div class="accordion-body">
-                  Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum
-                  velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend
-                  donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in
-                  cursus turpis massa tincidunt dui.
+                  Для добавления товара есть 2 варианта:<br>
+                  1) В шапке приложения  нажмите: Склад-> Добавить товар.<br>
+                  2) В шапке приложения  нажмите: Заказ-> Выберите поставщика -> Выберите товар -> Оплатить.
                 </div>
               </div>
             </div><!-- # Faq item-->
 
             <div class="accordion-item">
               <h3 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#faq-content-3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-3">
                   <i class="bi bi-question-circle question-icon"></i>
-                  Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi?
+                  Как сообщать сотрудникам информацию внутри приложения?
                 </button>
               </h3>
               <div id="faq-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist">
                 <div class="accordion-body">
-                  Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus
-                  pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit.
-                  Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis
-                  tellus. Urna molestie at elementum eu facilisis sed odio morbi quis
+                  В шапке приложения  нажмите: Чат-> Приложение автоматически заполнит вашу информацию -> Приятного общения.
                 </div>
               </div>
             </div><!-- # Faq item-->
 
             <div class="accordion-item">
               <h3 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#faq-content-4">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-4">
                   <i class="bi bi-question-circle question-icon"></i>
-                  Ac odio tempor orci dapibus. Aliquam eleifend mi in nulla?
+                  Как оприходывать купленный товар?
                 </button>
               </h3>
               <div id="faq-content-4" class="accordion-collapse collapse" data-bs-parent="#faqlist">
                 <div class="accordion-body">
                   <i class="bi bi-question-circle question-icon"></i>
-                  Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum
-                  velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend
-                  donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in
-                  cursus turpis massa tincidunt dui.
+                  В шапке приложения  нажмите: Склад-> Информация склада -> Информация ячейки.
                 </div>
               </div>
             </div><!-- # Faq item-->
-
-            <div class="accordion-item">
-              <h3 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#faq-content-5">
-                  <i class="bi bi-question-circle question-icon"></i>
-                  Tempus quam pellentesque nec nam aliquam sem et tortor consequat?
-                </button>
-              </h3>
-              <div id="faq-content-5" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                <div class="accordion-body">
-                  Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in
-                  est ante in. Nunc vel risus commodo viverra maecenas accumsan. Sit amet nisl
-                  suscipit adipiscing bibendum est. Purus gravida quis blandit turpis cursus in
-                </div>
-              </div>
-            </div><!-- # Faq item-->
-
           </div>
 
         </div>
       </div>
 
     </div>
-  </section><!-- End Frequently Asked Questions Section -->
+  </section>
 
 </main><!-- End #main -->
 
@@ -260,10 +232,9 @@
     <div class="row gy-4">
       <div class="col-lg-5 col-md-12 footer-info">
         <a href="index.html" class="logo d-flex align-items-center">
-          <span>Logis</span>
+          <span>Твой Склад</span>
         </a>
-        <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies
-          darta donna mare fermentum iaculis eu non diam phasellus.</p>
+        <p>Наша компания придает огромное значение нашим покупателям, поскольку мы осознаем, что они являются ключевым фактором нашего успеха.</p>
         <div class="social-links d-flex mt-4">
           <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
           <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -273,24 +244,24 @@
       </div>
 
       <div class="col-lg-2 col-6 footer-links">
-        <h4>Useful Links</h4>
+        <h4>Важные ссылки</h4>
         <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">About us</a></li>
-          <li><a href="#">Services</a></li>
-          <li><a href="#">Terms of service</a></li>
-          <li><a href="#">Privacy policy</a></li>
+          <li><a href="/">Главная страница</a></li>
+          <li><a href="/order/">Заказ</a></li>
+          <li><a href="/order/chart">Объём закупки</a></li>
+          <li><a href="/order/bar-cost">Доходность</a></li>
+          <li><a href="/chat">Чат</a></li>
         </ul>
       </div>
 
       <div class="col-lg-2 col-6 footer-links">
-        <h4>Our Services</h4>
+        <h4>Полезные сервисык</h4>
         <ul>
-          <li><a href="#">Web Design</a></li>
-          <li><a href="#">Web Development</a></li>
-          <li><a href="#">Product Management</a></li>
-          <li><a href="#">Marketing</a></li>
-          <li><a href="#">Graphic Design</a></li>
+          <li><a href="#">Твой Погрузчик</a></li>
+          <li><a href="#">Твой Доставщик</a></li>
+          <li><a href="#">WaterWays</a></li>
+          <li><a href="#">Интернет магазин</a></li>
+          <li><a href="#">Занято</a></li>
         </ul>
       </div>
 
@@ -308,20 +279,6 @@
 
     </div>
   </div>
-
-  <div class="container mt-4">
-    <div class="copyright">
-      &copy; Copyright <strong><span>Logis</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-      <!-- All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/logis-bootstrap-logistics-website-template/ -->
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-    </div>
-  </div>
-
 </footer><!-- End Footer -->
 <!-- End Footer -->
 

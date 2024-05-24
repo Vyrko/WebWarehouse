@@ -1,6 +1,7 @@
 package com.example.WebWarehouse.entity;
 
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,9 +12,11 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+@Getter
 @Entity
 @Data
 @Table(name = "users")
@@ -42,12 +45,13 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> role=new HashSet<>();
-    private LocalDateTime dataOfCreated;
+    private Date dataOfCreated;
     private boolean busy;
-
+    @Column(name = "status")
+    private String status;
 
     @PrePersist
-    private void init(){dataOfCreated=LocalDateTime.now();}
+    private void init(){dataOfCreated=new Date();}
 
     public boolean isAdmin(){return role.contains(Role.ROLE_ADMIN);}
     public boolean isWorker(){return role.contains(Role.ROLE_USER);}

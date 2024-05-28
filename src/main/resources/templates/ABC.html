@@ -28,16 +28,11 @@
   <link href="../static/vendor/aos/aos.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="../static/css/login.css" rel="stylesheet">
   <link href="../static/css/main.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: Logis
-  * Updated: Sep 18 2023 with Bootstrap v5.3.2
-  * Template URL: https://bootstrapmade.com/logis-bootstrap-logistics-website-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+
+
+
 </head>
 
 <body>
@@ -68,8 +63,7 @@
                 class="bi bi-chevron-down dropdown-indicator"></i></a>
           <ul>
             <li><a href="/order/chart">Объём закупки</a></li>
-            <li><a href="/abc-analysis">АВС-анализ</a></li>
-
+            <li><a href="/order/bar-chart">Стоимость закупки</a></li>
             <li><a href="/order/bar-cost">Доходность</a></li>
           </ul>
         </li>
@@ -92,7 +86,7 @@
       <div class="container position-relative">
         <div class="row d-flex justify-content-center">
           <div class="col-lg-6 text-center">
-            <h2> Авторизация </h2>
+            <h2>АВС анализ</h2>
           </div>
         </div>
       </div>
@@ -101,7 +95,7 @@
       <div class="container">
         <ol>
           <li><a href="/">Главная</a></li>
-          <li>Вход</li>
+          <li>АВС анализ</li>
         </ol>
       </div>
     </nav>
@@ -110,107 +104,38 @@
 
   <!-- ======= Services Section ======= -->
   <section id="service" class="services pt-5">
-    <div class="wrapper">
-      <form action="/login" method="post" class="login">
-        <p class="title">Авторизация</p>
-        <input name="username" type="email" placeholder="email" autofocus/>
-        <i class="fa fa-user"></i>
-        <input name="password" type="password" placeholder="password" />
-        <i class="fa fa-key"></i>
-        <a href="#">Забыли пароль?</a>
-        <button>
-          <i class="spinner"></i>
-          <span class="state">Войти</span>
-        </button>
-      </form>
-      <footer><a target="blank" href="/registration">Регистрация</a></footer>
-      </p>
+    <div class="container " data-aos="fade-up">
+      <div class="section-header">
+        <span >АВС анализ</span >
+        <h2>АВС анализ</h2>
+        <div class="row mb-3 ">
+          <div class="col text-center">
+            <table class="table">
+              <thead>
+              <tr>
+                <th>Название</th>
+                <th>Сумма</th>
+                <th>Категория</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="product : ${products}">
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.revenue}"></td>
+                <td th:text="${product.status}"></td>
+
+                <!--<td th:text="${cell.capacity - (cell.product_quantity * cell.product.size)}"></td>-->
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          </div>
+      </div>
     </div>
   </section><!-- End Services Section -->
 
 
 
-
-  <!-- ======= Frequently Asked Questions Section ======= -->
-  <section id="faq" class="faq">
-    <div class="container" data-aos="fade-up">
-
-      <div class="section-header">
-        <span>Часто задаваемые вопросы</span>
-        <h2>Часто задаваемые вопросы</h2>
-
-      </div>
-
-      <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="200">
-        <div class="col-lg-10">
-
-          <div class="accordion accordion-flush" id="faqlist">
-
-            <div class="accordion-item">
-              <h3 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-1">
-                  <i class="bi bi-question-circle question-icon"></i>
-                  Как сохранить склад?
-                </button>
-              </h3>
-              <div id="faq-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                <div class="accordion-body">
-                  В шапке приложения  нажмите: Склад->Добавить Склад.
-                </div>
-              </div>
-            </div><!-- # Faq item-->
-
-            <div class="accordion-item">
-              <h3 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-2">
-                  <i class="bi bi-question-circle question-icon"></i>
-                  Как добавить товар?
-                </button>
-              </h3>
-              <div id="faq-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                <div class="accordion-body">
-                  Для добавления товара есть 2 варианта:<br>
-                  1) В шапке приложения  нажмите: Склад-> Добавить товар.<br>
-                  2) В шапке приложения  нажмите: Заказ-> Выберите поставщика -> Выберите товар -> Оплатить.
-                </div>
-              </div>
-            </div><!-- # Faq item-->
-
-            <div class="accordion-item">
-              <h3 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-3">
-                  <i class="bi bi-question-circle question-icon"></i>
-                  Как сообщать сотрудникам информацию внутри приложения?
-                </button>
-              </h3>
-              <div id="faq-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                <div class="accordion-body">
-                  В шапке приложения  нажмите: Чат-> Приложение автоматически заполнит вашу информацию -> Приятного общения.
-                </div>
-              </div>
-            </div><!-- # Faq item-->
-
-            <div class="accordion-item">
-              <h3 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-4">
-                  <i class="bi bi-question-circle question-icon"></i>
-                  Как оприходывать купленный товар?
-                </button>
-              </h3>
-              <div id="faq-content-4" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                <div class="accordion-body">
-                  <i class="bi bi-question-circle question-icon"></i>
-                  В шапке приложения  нажмите: Склад-> Информация склада -> Информация ячейки.
-                </div>
-              </div>
-            </div><!-- # Faq item-->
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-  </section>
 
 </main><!-- End #main -->
 
@@ -274,6 +199,7 @@
 <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 <div id="preloader"></div>
+
 
 <!-- Vendor JS Files -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>

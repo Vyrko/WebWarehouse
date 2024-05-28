@@ -63,4 +63,9 @@ public class MainController {
         model.addAttribute("orders", orderService.barChar(user));
         return "user-index";
     }
+    @GetMapping("/abc-analysis")
+    public String abcAnalysis(@AuthenticationPrincipal User user, Model model) {
+        model.addAttribute("products", orderService.performABCAnalysis(user));
+        return "ABC";
+    }
 }

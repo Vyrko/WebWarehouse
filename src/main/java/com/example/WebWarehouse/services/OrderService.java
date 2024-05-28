@@ -6,6 +6,7 @@ import com.example.WebWarehouse.entity.Product;
 import com.example.WebWarehouse.entity.User;
 import com.example.WebWarehouse.model.CharOrder;
 import com.example.WebWarehouse.model.OrderFormModel;
+import com.example.WebWarehouse.model.ProductABC;
 import com.example.WebWarehouse.repository.OrderRepository;
 import com.example.WebWarehouse.repository.ProductRepository;
 import com.example.WebWarehouse.repository.UserRepository;
@@ -14,8 +15,7 @@ import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -94,6 +94,58 @@ public class OrderService {
 
     public void deletByProductId(Long productId) {
         orderRepository.deleteByProductId(productId);
+    }
+
+    public  List<ProductABC> performABCAnalysis(User user){
+        List<Order> orders= orderRepository.findBySupplier_Id(user.getId());
+        Map<String, Double> productCostMap = new HashMap<>();
+
+        // Вычисляем суммарную стоимость товаров с одинаковым именем
+        for (Order order : orders) {
+            String name = order.getProduct().getName();
+            double cost = order.getCost();
+
+            if (productCostMap.containsKey(name)) {
+                // Товар уже существует, добавляем стоимость
+                double totalCost = productCostMap.get(name) + cost;
+                productCostMap.put(name, totalCost);
+            } else {
+                // Товар встречается впервые, добавляем его в карту
+                productCostMap.put(name, cost);
+            }
+        }
+        // Создаем список товаров из карты
+        List<ProductABC> mergedProducts = new ArrayList<>();
+        for (Map.Entry<String, Double> entry : productCostMap.entrySet()) {
+            String name = entry.getKey();
+            double cost = entry.getValue();
+            mergedProducts.add(new ProductABC(name, cost,"0"));
+        }
+
+        // Сортируем товары по убыванию стоимости
+        mergedProducts.sort(Comparator.comparingDouble(ProductABC::getRevenue).reversed());
+
+        // Вычисляем сумму стоимости всех товаров
+        double totalCost = 0;
+        for (ProductABC product : mergedProducts) {
+            totalCost += product.getRevenue();
+        }
+
+        // Вычисляем накопленную долю стоимости и присваиваем категории
+        double accumulatedCost = 0;
+        for (ProductABC product : mergedProducts) {
+            double costPercentage = product.getRevenue() / totalCost;
+            accumulatedCost += costPercentage;
+
+            if (accumulatedCost <= 0.7) {
+                product.setStatus("Категория А");
+            } else if (accumulatedCost <= 0.9) {
+                product.setStatus("Категория B");
+            } else {
+                product.setStatus("Категория C");
+            }
+        }
+        return mergedProducts;
     }
 }
 
